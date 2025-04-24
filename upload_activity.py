@@ -3,7 +3,7 @@ import requests
 
 # 🔧 Configuration
 FOLDER_PATH = "./data"  # Replace with the actual path
-UPLOAD_URL = "https://localhost:3000/.integration/api/webhook/google-analytics"  # Replace with your target URL
+UPLOAD_URL = "http://localhost:3000/.integration/api/webhook/google-analytics"
 
 def find_myactivity_files(base_folder):
     files = {}
@@ -24,7 +24,10 @@ def create_multipart_payload(files_dict):
 
 def upload_files(files_dict):
     print(f"Uploading {len(files_dict)} file(s)...")
-    response = requests.post(UPLOAD_URL, files=create_multipart_payload(files_dict))
+    headers = {
+        "authorization": "secret!"
+    }
+    response = requests.post(UPLOAD_URL, files=create_multipart_payload(files_dict), headers=headers)
     print(f"Response code: {response.status_code}")
     print(response.text)
 
